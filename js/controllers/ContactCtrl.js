@@ -43,7 +43,7 @@ angular.module('ContactCtrl', []).controller('ContactCtrl', ['$scope', '$http', 
             url: '.contact_submit.php',
             data: autocompleteValidate(), // pass in data as strings
             headers: {'Content-Type': 'application/x-www-form-urlencoded'} // set the headers so angular passing info as form data (not request payload)
-        }).success(function (data) {
+        }).then((data) => {
             if (!data.success) {
                 console.log("it failed!");
                 // if not successful, bind errors to error variables
@@ -69,6 +69,8 @@ angular.module('ContactCtrl', []).controller('ContactCtrl', ['$scope', '$http', 
                 $scope.submission = true; //shows the success message
                 sweetAlert("Message Sent!", "Thanks for reaching out to us. You should have received a copy of your email to the address you provided. One of our members should be in touch with you shortly.", "success");
             }
+        }, (data) => {
+             sweetAlert("Houston, We've had a Problem!", "We ran into an issue, and weren't able to send your message. If you continue to get this error, contact us directly at officers@rpiambulance.com", "error");
         });
     };
 }]);
